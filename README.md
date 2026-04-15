@@ -14,15 +14,12 @@ cp .env.example .env  # fill in your values
 ```
 ROBINHOOD_USERNAME=you@example.com
 ROBINHOOD_PASSWORD=yourpassword
-
-# Robinhood > Account > Investing > Settings > Personal Information > Account numbers
 ROBINHOOD_ACCOUNT_NUMBER=123456789
-
-# SEC EDGAR CIK for the fund you want to mirror
-# Find it at https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=...&type=13F-HR
-# Situational Awareness LP (Leopold Aschenbrenner) = 2045724
 CIK=2045724
 ```
+
+- **ROBINHOOD_ACCOUNT_NUMBER** — Robinhood > Account > Investing > Settings > Personal Information > Account numbers
+- **CIK** — SEC EDGAR identifier for the fund. Find it at [EDGAR company search](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&type=13F-HR). Situational Awareness LP (Leopold Aschenbrenner) = `2045724`
 
 ## Usage
 
