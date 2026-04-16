@@ -3,7 +3,9 @@ import xml.etree.ElementTree as ET
 
 import requests
 
-EDGAR_HEADERS = {"User-Agent": "alex@example.com"}
+from constants import EDGAR_USER_AGENT
+
+EDGAR_HEADERS = {"User-Agent": EDGAR_USER_AGENT}
 
 
 def get_positions(cik: str, include_options: bool = True) -> list[tuple[str, float]]:
@@ -28,14 +30,15 @@ def get_positions(cik: str, include_options: bool = True) -> list[tuple[str, flo
     cusips = list({h["cusip"] for h in holdings})
     ticker_map = _cusips_to_tickers(cusips)
 
-    positions = []
-    for h in holdings:
-        ticker = ticker_map.get(h["cusip"])
-        if not ticker:
-            continue
-        positions.append((ticker, h["value"] / total))
+    resolved = [(ticker_map[h["cusip"]], h["value"]) for h in holdings if ticker_map.get(h["cusip"])]
+    resolved_total = sum(v for _, v in resolved)
+    if resolved_total == 0:
+        return []
 
-    positions.sort(key=lambda x: x[1], reverse=True)
+    positions = sorted(
+        [(ticker, value / resolved_total) for ticker, value in resolved],
+        key=lambda x: x[1], reverse=True,
+    )
     return positions
 
 

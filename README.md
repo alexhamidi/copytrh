@@ -1,11 +1,11 @@
-# Copy Trading
+# 13F Copy Trading
 
 Mirrors a hedge fund's 13F portfolio on Robinhood. Pulls the latest SEC filing, walks you through approving each position, then places fractional orders proportionally.
 
 ## Setup
 
 ```
-pip install -r requirements.txt
+uv sync
 cp .env.example .env  # fill in your values
 ```
 
@@ -16,15 +16,17 @@ ROBINHOOD_USERNAME=you@example.com
 ROBINHOOD_PASSWORD=yourpassword
 ROBINHOOD_ACCOUNT_NUMBER=123456789
 CIK=2045724
+EDGAR_USER_AGENT=you@example.com
 ```
 
 - **ROBINHOOD_ACCOUNT_NUMBER** — Robinhood > Account > Investing > Settings > Personal Information > Account numbers
 - **CIK** — SEC EDGAR identifier for the fund. Find it at [EDGAR company search](https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&type=13F-HR). Situational Awareness LP (Leopold Aschenbrenner) = `2045724`
+- **EDGAR_USER_AGENT** — sent as the `User-Agent` header to SEC EDGAR (required by their terms; use your email)
 
 ## Usage
 
 ```
-python main.py
+uv run main.py
 ```
 
 ## Example
